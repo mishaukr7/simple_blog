@@ -1,0 +1,49 @@
+{% block head %}
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+</head>
+
+{% endblock %}
+
+{% block navbar %}
+{% load static %}
+{% load bootstrap4%}
+{% bootstrap_css %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item" >
+        <a class="nav-link disabled">Hi, unknown user!!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+{% endblock navbar%}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+<div class="container">
+  <h2>Log in to My Site</h2>
+  {% if form.errors %}
+    <p style="color: red">Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+      {{form.media.js}}
+    <input type="hidden" name="next" value="{{ next }}" />
+{{form|crispy}}
+    <button type="submit">Log in</button>
+    <a href="{% url 'signup' %}">New to My Site? Sign up</a>
+  </form>
+</div>
+{% endblock content %}
+

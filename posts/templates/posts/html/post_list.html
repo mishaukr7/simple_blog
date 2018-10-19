@@ -1,0 +1,48 @@
+{% extends 'posts/html/base.html' %}
+
+{% block content %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+<div class="container">
+    <h1 align="center"> LIST OF POSTS</h1>
+<h2>&nbsp;</h2>
+    <div class="container">
+    <form method="get" class="form-inline my-2 my-lg-0">
+    <input name="sort" type="checkbox" value="author__user_city" {{ by_city }}>By city
+    <input name="sort" type="checkbox" value="author__user_country" {{ by_country }}>By country
+
+        <input id="search" name="q" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sort</button>
+</form>
+    </div>
+    <h2>&nbsp;</h2>
+<div class="row">
+        {% if post_list %}
+
+    {% for post in post_list%}
+
+           <div class="col-md-4">
+               {% if post.image%}
+               <img class="card-img-top" src="{{post.image.url}}" width="200" height="300" alt="Card image cap">
+               {% endif %}
+               <div class="card-box">
+                    <div class="card-title">
+                        <h2>{{post.title|safe}}</h2>
+                        <p>{{post.content|safe}} </p>
+                    </div>
+                    <div class="card-link">
+                        <a href="{{post.get_absolute_url}}" class="c-link">Learn More
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+{% endfor %}
+    {% endif %}
+</div>
+
+    {% bootstrap_pagination page_obj %}
+</div>
+{% endblock %}
+
